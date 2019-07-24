@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LoveDays</string>
+    <string name="myName">내 이름</string>
+    <string name="hisherName">상대방 이름</string>
+    <string name="yourMobileNumber">폰번호(You) - 옵션</string>
+    <string name="startingDate">연애 시작날짜가 언제에요?</string>
+</resources>

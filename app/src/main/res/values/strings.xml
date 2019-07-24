@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">LoveDays</string>
+    <string name="myName">Your Name?</string>
+    <string name="hisherName">His/Her Name</string>
+    <string name="yourMobileNumber">Your Mobile Number - Optional</string>
+    <string name="startingDate">When did your relationship begin?</string>
 </resources>

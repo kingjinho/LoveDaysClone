@@ -4,4 +4,6 @@
     <string name="hisherName">His/Her Name</string>
     <string name="yourMobileNumber">Your Mobile Number - Optional</string>
     <string name="startingDate">When did your relationship begin?</string>
+    <string name="clearAll">clear</string>
+    <string name="start">start</string>
 </resources>

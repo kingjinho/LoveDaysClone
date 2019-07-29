@@ -11,7 +11,9 @@ import androidx.annotation.Nullable;
 /**
  * Created by KING JINHO on 2019-07-24
  */
-public class MainScreen extends AbsFragment {
+public class MainScreenCenterTab extends AbsFragment {
+
+    public static final String TAG = MainScreenCenterTab.class.getSimpleName();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -21,7 +23,13 @@ public class MainScreen extends AbsFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override

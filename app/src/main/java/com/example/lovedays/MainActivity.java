@@ -5,10 +5,10 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 
 import com.example.lovedays.Screens.InitialSetupScreen;
-import com.example.lovedays.Screens.MainScreen;
+import com.example.lovedays.Screens.MainScreenCenterTab;
+import com.example.lovedays.Utils.Const;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,12 +21,11 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (isNewUser()) {
             fragmentManager.beginTransaction()
-                    .replace(R.id.main_container, new InitialSetupScreen(), InitialSetupScreen.class.getSimpleName())
+                    .replace(R.id.main_container, new InitialSetupScreen(), InitialSetupScreen.TAG)
                     .commit();
         } else {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.main_container, new MainScreen(), MainScreen.class.getSimpleName())
-                    .commit();
+            //TODO: VIEWPAGER
+            setViewPager();
         }
     }
 
@@ -74,4 +73,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void setViewPager(){
+
+    }
 }

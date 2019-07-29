@@ -9,13 +9,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.lovedays.MainActivity;
 import com.example.lovedays.R;
 
 import java.text.SimpleDateFormat;
@@ -27,12 +25,18 @@ import java.util.Date;
  */
 public class InitialSetupScreen extends AbsFragment {
 
+    public static final String TAG = InitialSetupScreen.class.getSimpleName();
+
     private Button mBtnClear;
     private Button mBtnStart;
     private TextView mTvRelationshipDate;
     private EditText mEtMyName;
     private EditText mEtHisHerName;
     private EditText mEtMobileNumber;
+    private ConstraintLayout mLayoutFragment;
+    private View mViewInflated;
+    private Date today = new Date();
+    private String mRelationshipSince;
 
     @Override
     public void onAttach(Context context) {
@@ -50,24 +54,38 @@ public class InitialSetupScreen extends AbsFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);//안하면 mDefaultView null.
-        ConstraintLayout layout = mDefaultView.findViewById(R.id.fragment_container);
-        View view = inflater.inflate(R.layout.initialsetupscreen, container, false);
+        mViewInflated = inflater.inflate(R.layout.initialsetupscreen, container, false);
+        mLayoutFragment = mDefaultView.findViewById(R.id.fragment_container);
         final Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
         int dayOfMonth = cal.get(Calendar.DATE);
-        mBtnStart = view.findViewById(R.id.btnStart);
-        mBtnClear = view.findViewById(R.id.btnClear);
-        mTvRelationshipDate = view.findViewById(R.id.tvDateSelect);
-        mTvRelationshipDate.setText(new SimpleDateFormat("yyyy/MM/dd").format(new Date()));
-        mTvRelationshipDate.setOnClickListener(v-> {
-            DatePickerDialog dialog = new DatePickerDialog(root, R.style.DialogTheme, (datePicker, yearSelected, monthSelected, dateSelected) ->{
-                Toast.makeText(root, "its all good", Toast.LENGTH_SHORT).show();
+        mEtMyName = mViewInflated.findViewById(R.id.etMyName);
+        mEtHisHerName = mViewInflated.findViewById(R.id.etTheirName);
+        mEtMobileNumber = mViewInflated.findViewById(R.id.etMobileNumber);
+        mBtnStart = mViewInflated.findViewById(R.id.btnStart);
+        mBtnClear = mViewInflated.findViewById(R.id.btnClear);
+        mTvRelationshipDate = mViewInflated.findViewById(R.id.tvDateSelect);
+        mTvRelationshipDate.setText(new SimpleDateFormat("yyyy/M/dd").format(today));
+        mTvRelationshipDate.setOnClickListener(v -> {
+            DatePickerDialog dialog = new DatePickerDialog(root, R.style.DialogTheme, (datePicker, yearSelected, monthSelected, dateSelected) -> {
+                mRelationshipSince = yearSelected + "/"
+                        + (monthSelected + 1) + "/"
+                        + dateSelected;
+                mTvRelationshipDate.setText(mRelationshipSince);
             }, year, month, dayOfMonth);
-
             dialog.show();
         });
-        layout.addView(view);
+
+        mBtnStart.setOnClickListener(v -> {
+
+        });
+
+        mBtnClear.setOnClickListener(v -> {
+            clear();
+        });
+
+        mLayoutFragment.addView(mViewInflated);
         return mDefaultView;
     }
 
@@ -104,10 +122,22 @@ public class InitialSetupScreen extends AbsFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mLayoutFragment.removeView(mViewInflated);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    private void clear() {
+        mEtMyName.setText("");
+        mEtHisHerName.setText("");
+        mEtMobileNumber.setText("");
+        setToday();
+    }
+
+    private void setToday(){
+        mTvRelationshipDate.setText(new SimpleDateFormat("yyyy/M/dd").format(today));
     }
 }

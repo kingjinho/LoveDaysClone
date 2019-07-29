@@ -78,7 +78,10 @@ public class InitialSetupScreen extends AbsFragment {
         });
 
         mBtnStart.setOnClickListener(v -> {
-
+            root.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_container, new MainScreenViewPagerGroup(), MainScreenViewPagerGroup.TAG )
+                    .commit();
         });
 
         mBtnClear.setOnClickListener(v -> {

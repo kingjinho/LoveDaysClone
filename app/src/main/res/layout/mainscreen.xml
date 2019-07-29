@@ -15,6 +15,7 @@
         app:layout_constraintVertical_weight="1"
         app:tabGravity="fill"
         app:tabMode="fixed"
+        app:tabTextColor="#ffffff"
         app:tabIndicatorColor="@android:color/transparent"/>
 
     <androidx.viewpager.widget.ViewPager

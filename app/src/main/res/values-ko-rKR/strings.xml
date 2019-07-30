@@ -7,4 +7,8 @@
     <string name="startingDate">연애 시작날짜가 언제에요?</string>
     <string name="clearAll">다시작성</string>
     <string name="start">시작하기</string>
+    <string name="date_cannot_be_later_than_today">선택한 날짜는 오늘보다 클 수 없습니다</string>
+    <string name="msg_empty_your_name">자신의 이름을 입력하세요</string>
+    <string name="msg_empty_their_name">사랑하는 사람의 이름을 입력하세요</string>
+    <string name="msg_wrong_mobile_number">휴대폰 번호를 확인해주세요</string>
 </resources>

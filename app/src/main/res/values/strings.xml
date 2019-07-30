@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">LoveDays</string>
-    <string name="myName">Your Name?</string>
+    <string name="myName">Your Name</string>
     <string name="hisherName">His/Her Name</string>
     <string name="yourMobileNumber">Your Number - Optional</string>
     <string name="startingDate">When did your relationship begin?</string>
     <string name="clearAll">clear</string>
     <string name="start">start</string>
+    <string name="date_cannot_be_later_than_today">Date cannot be later than today</string>
+    <string name="msg_empty_your_name">enter your name</string>
+    <string name="msg_empty_their_name">enter your lover\'s name</string>
+    <string name="msg_wrong_mobile_number">enter correct mobile number</string>
 </resources>

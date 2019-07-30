@@ -2,23 +2,29 @@ package com.example.lovedays.Screens;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.room.util.StringUtil;
 
 import com.example.lovedays.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 /**
  * Created by KING JINHO on 2019-07-24
@@ -66,22 +72,29 @@ public class InitialSetupScreen extends AbsFragment {
         mBtnStart = mViewInflated.findViewById(R.id.btnStart);
         mBtnClear = mViewInflated.findViewById(R.id.btnClear);
         mTvRelationshipDate = mViewInflated.findViewById(R.id.tvDateSelect);
+        mTvRelationshipDate.setPaintFlags(mTvRelationshipDate.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         mTvRelationshipDate.setText(new SimpleDateFormat("yyyy/M/dd").format(today));
         mTvRelationshipDate.setOnClickListener(v -> {
             DatePickerDialog dialog = new DatePickerDialog(root, R.style.DialogTheme, (datePicker, yearSelected, monthSelected, dateSelected) -> {
                 mRelationshipSince = yearSelected + "/"
                         + (monthSelected + 1) + "/"
                         + dateSelected;
-                mTvRelationshipDate.setText(mRelationshipSince);
+                if (dateValidation(yearSelected, monthSelected, dateSelected))
+                    mTvRelationshipDate.setText(mRelationshipSince);
+                else
+                    Toast.makeText(root, R.string.date_cannot_be_later_than_today, Toast.LENGTH_SHORT).show();
             }, year, month, dayOfMonth);
             dialog.show();
         });
 
         mBtnStart.setOnClickListener(v -> {
-            root.getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_container, new MainScreenViewPagerGroup(), MainScreenViewPagerGroup.TAG )
-                    .commit();
+            if (inputValidation()) {
+                saveInfo();
+                root.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_container, new MainScreenViewPagerGroup(), MainScreenViewPagerGroup.TAG)
+                        .commit();
+            }
         });
 
         mBtnClear.setOnClickListener(v -> {
@@ -140,7 +153,36 @@ public class InitialSetupScreen extends AbsFragment {
         setToday();
     }
 
-    private void setToday(){
+    private void setToday() {
         mTvRelationshipDate.setText(new SimpleDateFormat("yyyy/M/dd").format(today));
+    }
+
+    private boolean dateValidation(int year, int month, int date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, date);
+        if (calendar.getTime().after(today))
+            return false;
+        else
+            return true;
+    }
+
+    private boolean inputValidation() {
+        String regex = "^01(?:0|1|[6-9])[.-\\s]?(\\d{3}|\\d{4})[.-\\s]?(\\d{4})$";
+        if (mEtMyName.getText().toString().equals("")) {
+            Toast.makeText(root, R.string.msg_empty_your_name, Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (mEtHisHerName.getText().toString().equals("")) {
+            Toast.makeText(root, R.string.msg_empty_their_name, Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!Pattern.matches(regex, mEtMobileNumber.getText().toString())) {
+            Toast.makeText(root, R.string.msg_wrong_mobile_number, Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void saveInfo() {
+
     }
 }

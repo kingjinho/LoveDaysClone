@@ -2,8 +2,11 @@ package com.example.lovedays.Screens;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,17 +35,19 @@ import java.util.regex.Pattern;
 public class InitialSetupScreen extends AbsFragment {
 
     public static final String TAG = InitialSetupScreen.class.getSimpleName();
+    public static final String HISHER_NAME = "HISHER_NAME";
+    public static final String MY_NAME = "MY_NAME";
+    public static final String RELATIONSHIP_SINCE = "RELATIONSHIP_SINCE";
 
     private Button mBtnClear;
     private Button mBtnStart;
     private TextView mTvRelationshipDate;
     private EditText mEtMyName;
     private EditText mEtHisHerName;
-    private EditText mEtMobileNumber;
     private ConstraintLayout mLayoutFragment;
     private View mViewInflated;
     private Date today = new Date();
-    private String mRelationshipSince;
+    private String mRelationshipSince = "";
 
     @Override
     public void onAttach(Context context) {
@@ -68,12 +73,15 @@ public class InitialSetupScreen extends AbsFragment {
         int dayOfMonth = cal.get(Calendar.DATE);
         mEtMyName = mViewInflated.findViewById(R.id.etMyName);
         mEtHisHerName = mViewInflated.findViewById(R.id.etTheirName);
-        mEtMobileNumber = mViewInflated.findViewById(R.id.etMobileNumber);
         mBtnStart = mViewInflated.findViewById(R.id.btnStart);
         mBtnClear = mViewInflated.findViewById(R.id.btnClear);
         mTvRelationshipDate = mViewInflated.findViewById(R.id.tvDateSelect);
+        if(savedInstanceState != null && savedInstanceState.getString(MY_NAME) != null)
+            setDataFromSaveInstance(savedInstanceState);
+
         mTvRelationshipDate.setPaintFlags(mTvRelationshipDate.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         mTvRelationshipDate.setText(new SimpleDateFormat("yyyy/M/dd").format(today));
+        mRelationshipSince = new SimpleDateFormat("yyyy/M/dd").format(today);
         mTvRelationshipDate.setOnClickListener(v -> {
             DatePickerDialog dialog = new DatePickerDialog(root, R.style.DialogTheme, (datePicker, yearSelected, monthSelected, dateSelected) -> {
                 mRelationshipSince = yearSelected + "/"
@@ -108,6 +116,24 @@ public class InitialSetupScreen extends AbsFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(!mEtHisHerName.getText().toString().equals(""))
+            outState.putString(HISHER_NAME, mEtHisHerName.getText().toString());
+
+        if (!mEtMyName.getText().toString().equals(""))
+            outState.putString(MY_NAME, mEtMyName.getText().toString());
+
+        if (!mRelationshipSince.equals(""))
+            outState.putString(RELATIONSHIP_SINCE, mRelationshipSince);
     }
 
     @Override
@@ -146,10 +172,14 @@ public class InitialSetupScreen extends AbsFragment {
         super.onDetach();
     }
 
+    /*@Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        if(newConfig == )
+    }*/
+
     private void clear() {
         mEtMyName.setText("");
         mEtHisHerName.setText("");
-        mEtMobileNumber.setText("");
         setToday();
     }
 
@@ -167,15 +197,11 @@ public class InitialSetupScreen extends AbsFragment {
     }
 
     private boolean inputValidation() {
-        String regex = "^01(?:0|1|[6-9])[.-\\s]?(\\d{3}|\\d{4})[.-\\s]?(\\d{4})$";
         if (mEtMyName.getText().toString().equals("")) {
             Toast.makeText(root, R.string.msg_empty_your_name, Toast.LENGTH_SHORT).show();
             return false;
         } else if (mEtHisHerName.getText().toString().equals("")) {
             Toast.makeText(root, R.string.msg_empty_their_name, Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (!Pattern.matches(regex, mEtMobileNumber.getText().toString())) {
-            Toast.makeText(root, R.string.msg_wrong_mobile_number, Toast.LENGTH_SHORT).show();
             return false;
         } else {
             return true;
@@ -185,4 +211,15 @@ public class InitialSetupScreen extends AbsFragment {
     private void saveInfo() {
 
     }
+
+    private void setDataFromSaveInstance(Bundle saveInstance) {
+        if(!saveInstance.getString(HISHER_NAME).equals(""))
+            mEtHisHerName.setText(saveInstance.getString(HISHER_NAME));
+        if (!saveInstance.getString(MY_NAME).equals(""))
+            mEtMyName.setText(saveInstance.getString(MY_NAME));
+        if(!mRelationshipSince.equals("")){
+            mTvRelationshipDate.setText(mRelationshipSince);
+        }
+    }
+
 }

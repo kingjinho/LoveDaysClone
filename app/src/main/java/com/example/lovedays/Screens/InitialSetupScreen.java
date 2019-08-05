@@ -2,12 +2,9 @@ package com.example.lovedays.Screens;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.res.Configuration;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +16,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.room.util.StringUtil;
 
 import com.example.lovedays.R;
+import com.example.lovedays.Utils.Const;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.regex.Pattern;
 
 /**
  * Created by KING JINHO on 2019-07-24
@@ -35,9 +30,6 @@ import java.util.regex.Pattern;
 public class InitialSetupScreen extends AbsFragment {
 
     public static final String TAG = InitialSetupScreen.class.getSimpleName();
-    public static final String HISHER_NAME = "HISHER_NAME";
-    public static final String MY_NAME = "MY_NAME";
-    public static final String RELATIONSHIP_SINCE = "RELATIONSHIP_SINCE";
 
     private Button mBtnClear;
     private Button mBtnStart;
@@ -52,7 +44,6 @@ public class InitialSetupScreen extends AbsFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
     }
 
     @Override
@@ -66,7 +57,6 @@ public class InitialSetupScreen extends AbsFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);//안하면 mDefaultView null.
         mViewInflated = inflater.inflate(R.layout.initialsetupscreen, container, false);
-        mLayoutFragment = mDefaultView.findViewById(R.id.fragment_container);
         final Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
@@ -76,7 +66,7 @@ public class InitialSetupScreen extends AbsFragment {
         mBtnStart = mViewInflated.findViewById(R.id.btnStart);
         mBtnClear = mViewInflated.findViewById(R.id.btnClear);
         mTvRelationshipDate = mViewInflated.findViewById(R.id.tvDateSelect);
-        if(savedInstanceState != null && savedInstanceState.getString(MY_NAME) != null)
+        if (savedInstanceState != null && savedInstanceState.getString(Const.MY_NAME) != null)
             setDataFromSaveInstance(savedInstanceState);
 
         mTvRelationshipDate.setPaintFlags(mTvRelationshipDate.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -109,8 +99,7 @@ public class InitialSetupScreen extends AbsFragment {
             clear();
         });
 
-        mLayoutFragment.addView(mViewInflated);
-        return mDefaultView;
+        return mViewInflated;
     }
 
     @Override
@@ -126,14 +115,14 @@ public class InitialSetupScreen extends AbsFragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(!mEtHisHerName.getText().toString().equals(""))
-            outState.putString(HISHER_NAME, mEtHisHerName.getText().toString());
+        if (!mEtHisHerName.getText().toString().equals(""))
+            outState.putString(Const.HIS_HER_NAME, mEtHisHerName.getText().toString());
 
         if (!mEtMyName.getText().toString().equals(""))
-            outState.putString(MY_NAME, mEtMyName.getText().toString());
+            outState.putString(Const.MY_NAME, mEtMyName.getText().toString());
 
         if (!mRelationshipSince.equals(""))
-            outState.putString(RELATIONSHIP_SINCE, mRelationshipSince);
+            outState.putString(Const.RELATIONSHIP_START, mRelationshipSince);
     }
 
     @Override
@@ -164,18 +153,12 @@ public class InitialSetupScreen extends AbsFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mLayoutFragment.removeView(mViewInflated);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
     }
-
-    /*@Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        if(newConfig == )
-    }*/
 
     private void clear() {
         mEtMyName.setText("");
@@ -209,15 +192,22 @@ public class InitialSetupScreen extends AbsFragment {
     }
 
     private void saveInfo() {
+        SharedPreferences sharedPreferences = root.getSharedPreferences(Const.USER, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Const.MY_NAME, mEtMyName.getText().toString());
+        editor.putString(Const.HIS_HER_NAME, mEtHisHerName.getText().toString());
+        editor.putString(Const.RELATIONSHIP_START, mTvRelationshipDate.getText().toString());
+        editor.putBoolean(Const.IS_REGISTERED, true);
 
+        editor.commit();
     }
 
     private void setDataFromSaveInstance(Bundle saveInstance) {
-        if(!saveInstance.getString(HISHER_NAME).equals(""))
-            mEtHisHerName.setText(saveInstance.getString(HISHER_NAME));
-        if (!saveInstance.getString(MY_NAME).equals(""))
-            mEtMyName.setText(saveInstance.getString(MY_NAME));
-        if(!mRelationshipSince.equals("")){
+        if (!saveInstance.getString(Const.HIS_HER_NAME).equals(""))
+            mEtHisHerName.setText(saveInstance.getString(Const.HIS_HER_NAME));
+        if (!saveInstance.getString(Const.MY_NAME).equals(""))
+            mEtMyName.setText(saveInstance.getString(Const.MY_NAME));
+        if (!mRelationshipSince.equals("")) {
             mTvRelationshipDate.setText(mRelationshipSince);
         }
     }

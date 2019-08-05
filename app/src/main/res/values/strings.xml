@@ -10,4 +10,5 @@
     <string name="msg_empty_your_name">enter your name</string>
     <string name="msg_empty_their_name">enter your lover\'s name</string>
     <string name="msg_wrong_mobile_number">enter correct mobile number</string>
+    <string name="upcoming">upcoming</string>
 </resources>

@@ -1,5 +1,9 @@
 package com.example.lovedays.Adapter;
 
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -14,11 +18,10 @@ import com.example.lovedays.Screens.MainScreenSettings;
 public class MainScreenViewPagerAdapter extends FragmentStatePagerAdapter {
 
     public static final String TAG = MainScreenViewPagerAdapter.class.getSimpleName();
-    private int tabCount;
+    public static final int COUNT = 3;
 
     public MainScreenViewPagerAdapter(FragmentManager fm) {
         super(fm);
-        this.tabCount = fm.getFragments().size();
     }
 
     @Override
@@ -35,8 +38,14 @@ public class MainScreenViewPagerAdapter extends FragmentStatePagerAdapter {
         }
     }
 
+
     @Override
     public int getCount() {
-        return tabCount;
+        return 3;
+    }
+
+    @Override
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        super.destroyItem(container, position, object);
     }
 }

@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.lovedays.R;
+
 /**
  * Created by KING JINHO on 2019-07-24
  */
@@ -23,8 +25,7 @@ public class MainScreenCenterTab extends AbsFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.mainscreen_centertab, container,false);
     }
 
     @Override

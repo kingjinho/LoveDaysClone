@@ -37,8 +37,8 @@ public class AbsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mDefaultView = inflater.inflate(R.layout.absfragment, container, false);
-        return mDefaultView;
+        //mDefaultView = inflater.inflate(R.layout.absfragment, container, false);
+        return null;
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.example.lovedays.Screens.InitialSetupScreen;
 import com.example.lovedays.Screens.MainScreenCenterTab;
+import com.example.lovedays.Screens.MainScreenViewPagerGroup;
 import com.example.lovedays.Utils.Const;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,14 +20,14 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if (isNewUser()) {
+        if (!isNewUser())
             fragmentManager.beginTransaction()
                     .replace(R.id.main_container, new InitialSetupScreen(), InitialSetupScreen.TAG)
                     .commit();
-        } else {
-            //TODO: VIEWPAGER
-            setViewPager();
-        }
+         else
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_container, new MainScreenViewPagerGroup(), MainScreenViewPagerGroup.TAG)
+                    .commit();
     }
 
     @Override
@@ -65,11 +66,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isNewUser(){
-        SharedPreferences sf = getSharedPreferences(Const.FILE, MODE_PRIVATE);
-        if(sf.getString(Const.USER, "").equals(""))
-            return true;
-        else
-            return false;
+        SharedPreferences sf = getSharedPreferences(Const.USER, MODE_PRIVATE);
+        return sf.getBoolean(Const.IS_REGISTERED, false);
     }
 
 

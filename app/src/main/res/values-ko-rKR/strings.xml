@@ -11,4 +11,5 @@
     <string name="msg_empty_your_name">자신의 이름을 입력하세요</string>
     <string name="msg_empty_their_name">사랑하는 사람의 이름을 입력하세요</string>
     <string name="msg_wrong_mobile_number">휴대폰 번호를 확인해주세요</string>
+    <string name="upcoming">upcoming</string>
 </resources>

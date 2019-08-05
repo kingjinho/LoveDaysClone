@@ -9,12 +9,18 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.lovedays.Adapter.AnniversaryRecyclerviewAdapter;
+import com.example.lovedays.R;
 
 /**
  * Created by KING JINHO on 2019-07-29
  */
-public class MainScreenAnniversaryList extends Fragment {
+public class MainScreenAnniversaryList extends AbsFragment {
     public static final String TAG = MainScreenAnniversaryList.class.getSimpleName();
+    private RecyclerView mRecyclerView;
 
     @Override
     public void onAttach(Context context) {
@@ -29,7 +35,15 @@ public class MainScreenAnniversaryList extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.mainscreen_anniversary, container,false);
+        mRecyclerView = view.findViewById(R.id.recycler_anniversary);
+        AnniversaryRecyclerviewAdapter adapter = new AnniversaryRecyclerviewAdapter();
+        LinearLayoutManager manager = new LinearLayoutManager(root);
+        manager.setItemPrefetchEnabled(true);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(manager);
+        mRecyclerView.setAdapter(adapter);
+        return view;
     }
 
     @Override

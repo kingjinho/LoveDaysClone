@@ -8,10 +8,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.lovedays.Adapter.MainScreenViewPagerAdapter;
 import com.example.lovedays.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -21,6 +20,9 @@ import com.google.android.material.tabs.TabLayout;
 public class MainScreenViewPagerGroup extends AbsFragment {
 
     public static final String TAG = MainScreenViewPagerGroup.class.getSimpleName();
+    private MainScreenViewPagerAdapter mAdapter;
+    private TabLayout mTabLayout;
+    private ViewPager mViewPager;
 
     @Override
     public void onAttach(Context context) {
@@ -35,12 +37,15 @@ public class MainScreenViewPagerGroup extends AbsFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        ConstraintLayout layout = mDefaultView.findViewById(R.id.fragment_container);
         View view = inflater.inflate(R.layout.mainscreen, container, false);
+        mTabLayout = view.findViewById(R.id.tablayout);
+        mViewPager = view.findViewById(R.id.viewPager);
+        mAdapter = new MainScreenViewPagerAdapter(root.getSupportFragmentManager());
+
         setViewPager(view);
-        layout.addView(view);
-        return mDefaultView;
+        mTabLayout.setupWithViewPager(mViewPager);
+        setupTabViews();
+        return view;
     }
 
     @Override
@@ -83,11 +88,31 @@ public class MainScreenViewPagerGroup extends AbsFragment {
         super.onDetach();
     }
 
-    private void setViewPager(View view){
-        ViewPager viewPager = view.findViewById(R.id.viewPager);
-        TabLayout tabLayout = view.findViewById(R.id.tablayout);
-        tabLayout.addTab(tabLayout.newTab().setText("샘플1"));
-        tabLayout.addTab(tabLayout.newTab().setText("샘플2"));
-        tabLayout.addTab(tabLayout.newTab().setText("샘플3"));
+    private void setViewPager(View view) {
+        mViewPager.setAdapter(mAdapter);
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        mViewPager.setCurrentItem(1);
+    }
+
+    private void setupTabViews() {
+        mTabLayout.getTabAt(0).setText("기념일");
+        mTabLayout.getTabAt(1).setText(root.getString(R.string.app_name));
+        mTabLayout.getTabAt(2).setText("세팅");
     }
 }

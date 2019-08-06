@@ -66,12 +66,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isNewUser(){
-        SharedPreferences sf = getSharedPreferences(Const.USER, MODE_PRIVATE);
-        return sf.getBoolean(Const.IS_REGISTERED, false);
-    }
-
-
-    private void setViewPager(){
-
+        return getSharedPreferences(Const.USER, MODE_PRIVATE)
+                .getBoolean(Const.IS_REGISTERED, false);
     }
 }

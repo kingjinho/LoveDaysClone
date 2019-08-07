@@ -10,12 +10,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.lovedays.Model.Anniversary;
 import com.example.lovedays.R;
+
+import java.util.ArrayList;
 
 /**
  * Created by KING JINHO on 2019-07-29
  */
 public class AnniversaryRecyclerviewAdapter extends RecyclerView.Adapter<AnniversaryRecyclerviewAdapter.ViewHolder> {
+
+    ArrayList<Anniversary> data;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -35,6 +40,10 @@ public class AnniversaryRecyclerviewAdapter extends RecyclerView.Adapter<Anniver
         }
     }
 
+    public AnniversaryRecyclerviewAdapter(ArrayList data) {
+        this.data = data;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,12 +53,15 @@ public class AnniversaryRecyclerviewAdapter extends RecyclerView.Adapter<Anniver
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        Anniversary currentItem = data.get(position);
+        holder.tvAnniversary.setText(currentItem.getNameAnniversary());
+        holder.tvDDay.setText(currentItem.getDateFromToday());
+        holder.tvDate.setText(currentItem.getDateAnniversary());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return data.size();
     }
 
 

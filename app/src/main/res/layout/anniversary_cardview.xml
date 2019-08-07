@@ -5,7 +5,9 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/anniversary_background"
-    android:layout_marginEnd="20dp">
+    app:layout_constraintStart_toStartOf="@+id/tv_anniversary"
+    android:layout_marginEnd="20dp"
+    android:layout_marginBottom="10dp">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_current"
@@ -14,7 +16,7 @@
         app:layout_constraintEnd_toStartOf="@+id/tv_anniversary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_anniversary"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_date"
         android:src="@drawable/ic_current"
         android:layout_marginEnd="10dp"/>
 
@@ -27,6 +29,7 @@
         app:layout_constraintStart_toEndOf="@+id/iv_current"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_goneMarginLeft="20dp"
+        android:layout_marginBottom="15dp"
         android:textColor="#f1f0f0"
         tools:text="google"/>
 
@@ -39,7 +42,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/tv_date"
         android:textColor="#f1f0f0"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="10dp"
         android:text="@string/upcoming"
         tools:text="google"/>
 
@@ -48,11 +51,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/tv_anniversary"
+        app:layout_constraintEnd_toEndOf="@+id/tv_upcoming"
         app:layout_constraintStart_toStartOf="@+id/tv_anniversary"
         app:layout_constraintTop_toBottomOf="@+id/tv_anniversary"
         android:textColor="#f1f0f0"
-        tools:text="hello"/>
+        tools:text="hello"
+        android:layout_marginBottom="15dp"/>
 
     <TextView
         android:id="@+id/tv_dDay"

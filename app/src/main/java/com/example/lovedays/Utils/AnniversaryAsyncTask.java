@@ -56,7 +56,7 @@ public class AnniversaryAsyncTask extends AsyncTask<Void, Void, Object> {
     @Override
     protected void onPostExecute(Object o) {
         if(mAnniversaryAsync != null && mCallback != null)
-            mCallback.onPostExecute(0);
+            mCallback.onPostExecute(o);
     }
 
     @Override

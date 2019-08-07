@@ -114,22 +114,22 @@ public class MainScreenAnniversaryList extends AbsFragment {
                 for (int i = 0; i < 36500; i++) {
                     startCalendar.setTime(dateRelationship);
                     startCalendar.add(Calendar.DATE, i);
+                    //더한 값
                     Date date = dateFormat.parse(startCalendar.get(Calendar.YEAR) + "/"
                             + (startCalendar.get(Calendar.MONTH) + 1) + "/"
                             + startCalendar.get(Calendar.DATE));
-                    long diff = (date.getTime() - today.getTime()) / (24 * 60 * 60 * 1000);
-                    if (diff == 0.0)
+
+                    int dateCountFromRelationship = (int)(date.getTime() - dateRelationship.getTime()) / (24 * 60 * 60 * 1000);
+                    int dateCountFromToday = (int) ((date.getTime() - today.getTime()) / (24 * 60 * 60 * 1000));
+
+                    if (dateCountFromRelationship == 0.0)
                         continue;
-                    else if ((int) diff % 365 == 0)
-                        list.add(new Anniversary(today.after(date),
-                                dateFormat.format(date.getTime()),
-                                i + "주년",
-                                (int) diff));
-                    else if ((int) diff % 100 == 0)
-                        list.add(new Anniversary(today.after(date),
-                                dateFormat.format(date.getTime()),
-                                (i * 100) + "일",
-                                (int) diff));
+                    else if (dateCountFromRelationship % 365 == 0)
+                        list.add(new Anniversary(today.after(date), dateFormat.format(date.getTime()),
+                                dateCountFromRelationship / 365 + "주년", dateCountFromToday));
+                    else if (dateCountFromRelationship % 100 == 0)
+                        list.add(new Anniversary(today.after(date), dateFormat.format(date.getTime()),
+                                dateCountFromRelationship + "일", dateCountFromToday));
                 }
                 return list;
             }

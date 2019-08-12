@@ -18,11 +18,12 @@ import java.util.ArrayList;
 /**
  * Created by KING JINHO on 2019-07-29
  */
-public class AnniversaryRecyclerviewAdapter extends RecyclerView.Adapter<AnniversaryRecyclerviewAdapter.ViewHolder> {
+public class AnniversaryRecyclerViewAdapter extends RecyclerView.Adapter<AnniversaryRecyclerViewAdapter.ViewHolder> {
 
-    ArrayList<Anniversary> data;
+    private ArrayList<Anniversary> data;
+    private Context context;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ivCurrent;
         TextView tvAnniversary;
@@ -40,8 +41,9 @@ public class AnniversaryRecyclerviewAdapter extends RecyclerView.Adapter<Anniver
         }
     }
 
-    public AnniversaryRecyclerviewAdapter(ArrayList data) {
+    public AnniversaryRecyclerViewAdapter(ArrayList data, Context context) {
         this.data = data;
+        this.context = context;
     }
 
     @NonNull
@@ -57,6 +59,20 @@ public class AnniversaryRecyclerviewAdapter extends RecyclerView.Adapter<Anniver
         holder.tvAnniversary.setText(currentItem.getNameAnniversary());
         holder.tvDDay.setText(currentItem.getDateFromToday());
         holder.tvDate.setText(currentItem.getDateAnniversary());
+        if (currentItem.isPassed()) {
+            holder.ivCurrent.setVisibility(View.INVISIBLE);
+            holder.tvAnniversary.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
+            holder.tvDDay.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
+            holder.tvDate.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
+            holder.tvUpcoming.setVisibility(View.INVISIBLE);
+        }
+        if(!currentItem.isUpcoming()) {
+            holder.tvUpcoming.setVisibility(View.INVISIBLE);
+            holder.ivCurrent.setVisibility(View.INVISIBLE);
+        } else { // ??????
+            holder.tvUpcoming.setVisibility(View.VISIBLE);
+            holder.ivCurrent.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

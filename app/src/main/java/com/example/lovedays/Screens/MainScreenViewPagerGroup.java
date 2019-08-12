@@ -42,8 +42,8 @@ public class MainScreenViewPagerGroup extends AbsFragment {
         mViewPager = view.findViewById(R.id.viewPager);
         mAdapter = new MainScreenViewPagerAdapter(root.getSupportFragmentManager());
 
-        setViewPager(view);
         mTabLayout.setupWithViewPager(mViewPager);
+        setViewPager();
         setupTabViews();
         return view;
     }
@@ -88,7 +88,7 @@ public class MainScreenViewPagerGroup extends AbsFragment {
         super.onDetach();
     }
 
-    private void setViewPager(View view) {
+    private void setViewPager() {
         mViewPager.setAdapter(mAdapter);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -111,8 +111,8 @@ public class MainScreenViewPagerGroup extends AbsFragment {
     }
 
     private void setupTabViews() {
-        mTabLayout.getTabAt(0).setText("기념일");
+        mTabLayout.getTabAt(0).setIcon(R.mipmap.ic_setting);
         mTabLayout.getTabAt(1).setText(root.getString(R.string.app_name));
-        mTabLayout.getTabAt(2).setText("세팅");
+        mTabLayout.getTabAt(2).setIcon(R.mipmap.ic_anni);
     }
 }

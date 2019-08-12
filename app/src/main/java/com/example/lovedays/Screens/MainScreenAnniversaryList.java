@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lovedays.Adapter.AnniversaryRecyclerviewAdapter;
+import com.example.lovedays.Adapter.AnniversaryRecyclerViewAdapter;
 import com.example.lovedays.Model.Anniversary;
 import com.example.lovedays.R;
 import com.example.lovedays.Utils.AnniversaryAsyncTask;
@@ -106,29 +106,41 @@ public class MainScreenAnniversaryList extends AbsFragment {
                 Calendar startCalendar = Calendar.getInstance();
                 startCalendar.setTime(dateRelationship);
 
+                Calendar calendarComparison = Calendar.getInstance();
+                calendarComparison.setTime(dateRelationship);
+
                 Calendar todayCalendar = Calendar.getInstance();
                 Date today = new Date();
                 todayCalendar.setTime(today);
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/M/dd");
-                for (int i = 0; i < 36500; i++) {
-                    startCalendar.setTime(dateRelationship);
-                    startCalendar.add(Calendar.DATE, i);
-                    //더한 값
-                    Date date = dateFormat.parse(startCalendar.get(Calendar.YEAR) + "/"
-                            + (startCalendar.get(Calendar.MONTH) + 1) + "/"
-                            + startCalendar.get(Calendar.DATE));
+                for (int i = 1; i <= 36500; i++) {
+                    calendarComparison.setTime(dateRelationship);
+                    calendarComparison.add(Calendar.DATE, i);
 
-                    int dateCountFromRelationship = (int)(date.getTime() - dateRelationship.getTime()) / (24 * 60 * 60 * 1000);
-                    int dateCountFromToday = (int) ((date.getTime() - today.getTime()) / (24 * 60 * 60 * 1000));
+                    //더한 값
+                    Date date = dateFormat.parse(calendarComparison.get(Calendar.YEAR) + "/"
+                            + (calendarComparison.get(Calendar.MONTH) + 1) + "/"
+                            + calendarComparison.get(Calendar.DATE));
+
+                    int dayMilliSeconds = 24 * 60 * 60 * 1000;
+                    int dateCountFromRelationship = (int) ((date.getTime() - dateRelationship.getTime()) / dayMilliSeconds);
+                    int dateCountFromToday = (int) ((date.getTime() - today.getTime()) / dayMilliSeconds) + 1;
 
                     if (dateCountFromRelationship == 0.0)
                         continue;
-                    else if (dateCountFromRelationship % 365 == 0)
+                    else if (calendarComparison.get(Calendar.MONTH) == startCalendar.get(Calendar.MONTH) && calendarComparison.get(Calendar.DATE) == startCalendar.get(Calendar.DATE))
+                        list.add(new Anniversary(today.after(date),
+                                dateCountFromToday > 0 && dateCountFromToday <= 100,
+                                dateFormat.format(date.getTime()),
+                                calendarComparison.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR) + "주년", dateCountFromToday + 1));
+                    /*else if (dateCountFromRelationship > 365 && dateCountFromRelationship % 365 == 1)
                         list.add(new Anniversary(today.after(date), dateFormat.format(date.getTime()),
-                                dateCountFromRelationship / 365 + "주년", dateCountFromToday));
+                                dateCountFromRelationship / 365 + "주년", dateCountFromToday));*/
                     else if (dateCountFromRelationship % 100 == 0)
-                        list.add(new Anniversary(today.after(date), dateFormat.format(date.getTime()),
+                        list.add(new Anniversary(today.after(date),
+                                dateCountFromToday > 0 && dateCountFromToday <= 100,
+                                dateFormat.format(date.getTime() - dayMilliSeconds),
                                 dateCountFromRelationship + "일", dateCountFromToday));
                 }
                 return list;
@@ -136,7 +148,7 @@ public class MainScreenAnniversaryList extends AbsFragment {
 
             @Override
             protected void onPostExecute(ArrayList result) {
-                AnniversaryRecyclerviewAdapter adapter = new AnniversaryRecyclerviewAdapter(result);
+                AnniversaryRecyclerViewAdapter adapter = new AnniversaryRecyclerViewAdapter(result, root);
                 LinearLayoutManager manager = new LinearLayoutManager(root);
                 manager.setOrientation(RecyclerView.VERTICAL);
                 manager.setItemPrefetchEnabled(true);

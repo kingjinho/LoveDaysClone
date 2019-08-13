@@ -11,4 +11,5 @@ public class Const {
     public static final String HIS_HER_NAME = "HIS_HER_NAME";
     public static final String MY_NAME = "MY_NAME";
     public static final String RELATIONSHIP_START = "RELATIONSHIP_START";
+    public static final int MAX = 1000;
 }

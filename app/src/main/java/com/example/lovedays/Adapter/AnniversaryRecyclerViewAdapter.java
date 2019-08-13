@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lovedays.Model.Anniversary;
@@ -61,15 +62,15 @@ public class AnniversaryRecyclerViewAdapter extends RecyclerView.Adapter<Anniver
         holder.tvDate.setText(currentItem.getDateAnniversary());
         if (currentItem.isPassed()) {
             holder.ivCurrent.setVisibility(View.INVISIBLE);
-            holder.tvAnniversary.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
-            holder.tvDDay.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
-            holder.tvDate.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
             holder.tvUpcoming.setVisibility(View.INVISIBLE);
+            holder.tvAnniversary.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+            holder.tvDDay.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+            holder.tvDate.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
         }
-        if(!currentItem.isUpcoming()) {
+        if (!currentItem.isUpcoming()) {
             holder.tvUpcoming.setVisibility(View.INVISIBLE);
             holder.ivCurrent.setVisibility(View.INVISIBLE);
-        } else { // ??????
+        } else {
             holder.tvUpcoming.setVisibility(View.VISIBLE);
             holder.ivCurrent.setVisibility(View.VISIBLE);
         }

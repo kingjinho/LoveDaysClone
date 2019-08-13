@@ -12,4 +12,6 @@
     <string name="msg_empty_their_name">사랑하는 사람의 이름을 입력하세요</string>
     <string name="msg_wrong_mobile_number">휴대폰 번호를 확인해주세요</string>
     <string name="upcoming">upcoming</string>
+    <string name="error">error!!</string>
+    <string name="in_love_since">우리벌써 \n %1$d \n일째사랑중♡</string>
 </resources>

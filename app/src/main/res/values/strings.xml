@@ -11,4 +11,6 @@
     <string name="msg_empty_their_name">enter your lover\'s name</string>
     <string name="msg_wrong_mobile_number">enter correct mobile number</string>
     <string name="upcoming">upcoming</string>
+    <string name="error">error!!</string>
+    <string name="in_love_since">in Love for \n\n %1$d days♡</string>
 </resources>

@@ -4,18 +4,24 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.lovedays.R;
 import com.example.lovedays.Utils.Const;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,6 +33,9 @@ import java.util.Date;
 public class MainScreenCenterTab extends AbsFragment {
 
     public static final String TAG = MainScreenCenterTab.class.getSimpleName();
+    private ProgressBar mProgressDate;
+    private TextView mTvDateCount;
+    private String mRelationshopStart;
 
 
     @Override
@@ -38,27 +47,43 @@ public class MainScreenCenterTab extends AbsFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.mainscreen_centertab, container, false);
-        ProgressBar progress_date = view.findViewById(R.id.progress_date);
-        TextView tvDateCount = view.findViewById(R.id.dateCount);
+        mProgressDate = view.findViewById(R.id.progress_date);
+        mTvDateCount = view.findViewById(R.id.dateCount);
         SharedPreferences sharedPreferences = root.getSharedPreferences(Const.USER, Context.MODE_PRIVATE);
-        String relationshipStart = sharedPreferences.getString(Const.RELATIONSHIP_START, "");
+        mRelationshopStart = sharedPreferences.getString(Const.RELATIONSHIP_START, "");
 
-        progress_date.setMax(Const.MAX);
+        ImageView ivMe = view.findViewById(R.id.iv_me);
+        ImageView ivHer = view.findViewById(R.id.iv_her);
+        TextView tvMyName = view.findViewById(R.id.tv_myName);
+        TextView tvHerName =  view.findViewById(R.id.tv_herName);
+
+        ConstraintLayout layoutProfile1 = view.findViewById(R.id.layout_profile1);
+        ConstraintLayout layoutProfile2 = view.findViewById(R.id.layout_profile2);
+
+        setProgressBar();
+        mProgressDate.setOnClickListener(v -> showPopupMenu(v));
+        layoutProfile1.setOnClickListener(v-> showPopupMenu(v));
+        layoutProfile2.setOnClickListener(v-> showPopupMenu(v));
+
+        return view;
+    }
+
+    private void setProgressBar() {
+        mProgressDate.setMax(Const.MAX);
         try {
-            Date dateRelationshipStart = new SimpleDateFormat("yyyy/M/dd").parse(relationshipStart);
+            Date dateRelationshipStart = new SimpleDateFormat("yyyy/M/dd").parse(mRelationshopStart);
             Calendar startCalendar = Calendar.getInstance();
             startCalendar.setTime(dateRelationshipStart);
             Date today = new Date();
             int dateCount = (int) ((today.getTime() - dateRelationshipStart.getTime()) / (24 * 60 * 60 * 1000));
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                progress_date.setProgress(dateCount % 1000, true);
+                mProgressDate.setProgress(dateCount % Const.MAX, true);
             else
-                progress_date.setProgress(dateCount % 1000);
-            tvDateCount.setText(root.getString(R.string.in_love_since, dateCount));
+                mProgressDate.setProgress(dateCount % Const.MAX);
+            mTvDateCount.setText(root.getString(R.string.in_love_since, dateCount));
         } catch (Exception e) {
             Toast.makeText(root, R.string.error, Toast.LENGTH_SHORT).show();
         }
-        return view;
     }
 
     @Override
@@ -100,4 +125,18 @@ public class MainScreenCenterTab extends AbsFragment {
     public void onDetach() {
         super.onDetach();
     }
+
+    private void showPopupMenu(View view){
+        if (view instanceof ProgressBar) {
+
+        } else {
+            PopupMenu popup = new PopupMenu(root, view, Gravity.BOTTOM);
+            popup.getMenu().add(0,1,1,"샘플1");
+            popup.getMenu().add(0,2,2,"샘플2");
+            popup.getMenu().add(0,3,3,"샘플3");
+            popup.getMenu().add(0,4,4,"샘플4");
+            popup.show();
+        }
+    }
+
 }

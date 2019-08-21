@@ -6,7 +6,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -59,11 +61,10 @@ public class MainScreenCenterTab extends AbsFragment {
 
         ConstraintLayout layoutProfile1 = view.findViewById(R.id.layout_profile1);
         ConstraintLayout layoutProfile2 = view.findViewById(R.id.layout_profile2);
-
         setProgressBar();
-        mProgressDate.setOnClickListener(v -> showPopupMenu(v));
-        layoutProfile1.setOnClickListener(v-> showPopupMenu(v));
-        layoutProfile2.setOnClickListener(v-> showPopupMenu(v));
+        mProgressDate.setOnClickListener(v -> showBottomPopupMenu(v));
+        layoutProfile1.setOnClickListener(v-> showBottomPopupMenu(v));
+        layoutProfile2.setOnClickListener(v-> showBottomPopupMenu(v));
 
         return view;
     }
@@ -126,17 +127,11 @@ public class MainScreenCenterTab extends AbsFragment {
         super.onDetach();
     }
 
-    private void showPopupMenu(View view){
-        if (view instanceof ProgressBar) {
-
-        } else {
-            PopupMenu popup = new PopupMenu(root, view, Gravity.BOTTOM);
-            popup.getMenu().add(0,1,1,"샘플1");
-            popup.getMenu().add(0,2,2,"샘플2");
-            popup.getMenu().add(0,3,3,"샘플3");
-            popup.getMenu().add(0,4,4,"샘플4");
-            popup.show();
-        }
+    private void showBottomPopupMenu(View view) {
+        BottomNavigationDrawerFragment drawerFragment;
+        if(view instanceof ProgressBar) {
+            drawerFragment = new BottomNavigationDrawerFragment(Type.PROFILE);
+        } else drawerFragment = new BottomNavigationDrawerFragment(Type.PICTURE);
+        drawerFragment.show(root.getSupportFragmentManager(), drawerFragment.getTag());
     }
-
 }

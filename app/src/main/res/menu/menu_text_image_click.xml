@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="none">
+        <item android:id="@+id/changeName"
+            android:title="이름 수정"/>
+        <item android:id="@+id/changeProfilePicture"
+            android:title="프로필 사진 변경"/>
+        <item android:id="@+id/deleteProfilePicture"
+            android:title="프로필 사진 삭제"/>
+    </group>
+</menu>

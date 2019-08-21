@@ -62,9 +62,9 @@ public class MainScreenCenterTab extends AbsFragment {
         ConstraintLayout layoutProfile1 = view.findViewById(R.id.layout_profile1);
         ConstraintLayout layoutProfile2 = view.findViewById(R.id.layout_profile2);
         setProgressBar();
-        mProgressDate.setOnClickListener(v -> showBottomPopupMenu(v));
-        layoutProfile1.setOnClickListener(v-> showBottomPopupMenu(v));
-        layoutProfile2.setOnClickListener(v-> showBottomPopupMenu(v));
+        mProgressDate.setOnClickListener(v -> showBottomPopupMenu(true));
+        layoutProfile1.setOnClickListener(v-> showBottomPopupMenu(false));
+        layoutProfile2.setOnClickListener(v-> showBottomPopupMenu(false));
 
         return view;
     }
@@ -127,11 +127,8 @@ public class MainScreenCenterTab extends AbsFragment {
         super.onDetach();
     }
 
-    private void showBottomPopupMenu(View view) {
-        BottomNavigationDrawerFragment drawerFragment;
-        if(view instanceof ProgressBar) {
-            drawerFragment = new BottomNavigationDrawerFragment(Type.PROFILE);
-        } else drawerFragment = new BottomNavigationDrawerFragment(Type.PICTURE);
+    private void showBottomPopupMenu(boolean isProfile) {
+        BottomNavigationDrawerFragment drawerFragment = new BottomNavigationDrawerFragment(root,isProfile);
         drawerFragment.show(root.getSupportFragmentManager(), drawerFragment.getTag());
     }
 }

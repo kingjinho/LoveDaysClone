@@ -13,4 +13,8 @@
     <string name="upcoming">upcoming</string>
     <string name="error">error!!</string>
     <string name="in_love_since">in Love for \n\n %1$d days♡</string>
+    <string name="save">save</string>
+    <string name="cancel">cancel</string>
+    <string name="set_new_name">set new name</string>
+    <string name="set_your_new_phrase">set your new phrease</string>
 </resources>

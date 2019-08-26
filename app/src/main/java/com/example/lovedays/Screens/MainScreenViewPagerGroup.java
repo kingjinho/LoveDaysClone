@@ -23,6 +23,9 @@ public class MainScreenViewPagerGroup extends AbsFragment {
     private MainScreenViewPagerAdapter mAdapter;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
+    private View mView;
+
+    private boolean isInitial = true;
 
     @Override
     public void onAttach(Context context) {
@@ -37,15 +40,19 @@ public class MainScreenViewPagerGroup extends AbsFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.mainscreen, container, false);
-        mTabLayout = view.findViewById(R.id.tablayout);
-        mViewPager = view.findViewById(R.id.viewPager);
-        mAdapter = new MainScreenViewPagerAdapter(root.getSupportFragmentManager());
-
-        mTabLayout.setupWithViewPager(mViewPager);
-        setViewPager();
-        setupTabViews();
-        return view;
+        if (isInitial) {
+            mView = inflater.inflate(R.layout.mainscreen, container, false);
+            mTabLayout = mView.findViewById(R.id.tablayout);
+            mViewPager = mView.findViewById(R.id.viewPager);
+            mAdapter = new MainScreenViewPagerAdapter(root.getSupportFragmentManager());
+            mViewPager.setOffscreenPageLimit(3);
+            mTabLayout.setupWithViewPager(mViewPager);
+            setViewPager();
+            setupTabViews();
+        }
+        mViewPager.setCurrentItem(1, false);
+        isInitial = false;
+        return mView;
     }
 
     @Override
@@ -104,10 +111,8 @@ public class MainScreenViewPagerGroup extends AbsFragment {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
-        mViewPager.setCurrentItem(1);
     }
 
     private void setupTabViews() {

@@ -23,9 +23,10 @@ public class MainActivity extends AppCompatActivity {
             fragmentManager.beginTransaction()
                     .replace(R.id.main_container, new InitialSetupScreen(), InitialSetupScreen.TAG)
                     .commit();
-         else
+        else
             fragmentManager.beginTransaction()
                     .replace(R.id.main_container, new MainScreenViewPagerGroup(), MainScreenViewPagerGroup.TAG)
+                    .addToBackStack(MainScreenViewPagerGroup.TAG)
                     .commit();
     }
 
@@ -61,10 +62,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if (getSupportFragmentManager().getFragments().size() > 1) {
+            getSupportFragmentManager().popBackStack();
+        }
     }
 
-    private boolean isNewUser(){
+    private boolean isNewUser() {
         return getSharedPreferences(Const.USER, MODE_PRIVATE)
                 .getBoolean(Const.IS_REGISTERED, false);
     }

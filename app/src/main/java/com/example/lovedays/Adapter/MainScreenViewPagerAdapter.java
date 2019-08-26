@@ -1,9 +1,5 @@
 package com.example.lovedays.Adapter;
 
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -41,11 +37,7 @@ public class MainScreenViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return COUNT;
     }
 
-    @Override
-    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        super.destroyItem(container, position, object);
-    }
 }

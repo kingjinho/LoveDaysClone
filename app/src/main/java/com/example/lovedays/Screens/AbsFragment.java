@@ -18,7 +18,7 @@ import com.example.lovedays.R;
  */
 public class AbsFragment extends Fragment {
 
-    protected MainActivity root;
+    protected static MainActivity root;
 
     protected View mDefaultView;
 

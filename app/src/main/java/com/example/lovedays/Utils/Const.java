@@ -12,4 +12,9 @@ public class Const {
     public static final String MY_NAME = "MY_NAME";
     public static final String RELATIONSHIP_START = "RELATIONSHIP_START";
     public static final int MAX = 1000;
+
+    public static String relationshipDate;
+    public static int relationshipSince;
+    public static String myName;
+    public static String yourName;
 }

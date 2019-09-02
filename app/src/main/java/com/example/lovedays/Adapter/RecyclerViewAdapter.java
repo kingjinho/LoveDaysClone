@@ -67,23 +67,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        switch (viewType) {
-            case 0:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.anniversary_cardview, parent, false);
-                return new AnniversaryViewHolder(view);
-            case 1:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.anniversary_cardview, parent, false);
-                return new SettingViewHolder(view);
-
+        if (viewType == 0) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.anniversary_cardview, parent, false);
+            return new SettingViewHolder(view);
+        } else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.anniversary_cardview, parent, false);
+            return new AnniversaryViewHolder(view);
         }
-
-        return null;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         switch (holder.getItemViewType()) {
             case 0:
+                break;
+            case 1:
                 AnniversaryViewHolder anniversaryViewHolder = (AnniversaryViewHolder) holder;
                 Anniversary currentItem = (Anniversary) data.get(position);
                 anniversaryViewHolder.tvAnniversary.setText(currentItem.getNameAnniversary());
@@ -107,9 +105,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     anniversaryViewHolder.tvUpcoming.setVisibility(View.VISIBLE);
                     anniversaryViewHolder.ivCurrent.setVisibility(View.VISIBLE);
                 }
-                break;
-            case 1:
-
                 break;
         }
 

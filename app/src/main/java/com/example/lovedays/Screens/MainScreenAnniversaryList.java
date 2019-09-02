@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lovedays.Adapter.AnniversaryRecyclerViewAdapter;
+import com.example.lovedays.Adapter.RecyclerViewAdapter;
 import com.example.lovedays.Model.Anniversary;
 import com.example.lovedays.R;
 import com.example.lovedays.Utils.AnniversaryAsyncTask;
@@ -114,7 +114,7 @@ public class MainScreenAnniversaryList extends AbsFragment {
                 todayCalendar.setTime(today);
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/M/dd");
-                for (int i = 1; i <= 36500; i++) {
+                for (int i = 1; i <= 3650; i++) {
                     calendarComparison.setTime(dateRelationship);
                     calendarComparison.add(Calendar.DATE, i);
 
@@ -148,7 +148,7 @@ public class MainScreenAnniversaryList extends AbsFragment {
 
             @Override
             protected void onPostExecute(ArrayList result) {
-                AnniversaryRecyclerViewAdapter adapter = new AnniversaryRecyclerViewAdapter(result, root);
+                RecyclerViewAdapter adapter = new RecyclerViewAdapter(result, root);
                 LinearLayoutManager manager = new LinearLayoutManager(root);
                 manager.setOrientation(RecyclerView.VERTICAL);
                 manager.setItemPrefetchEnabled(true);

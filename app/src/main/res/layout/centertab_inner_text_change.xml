@@ -13,9 +13,9 @@
         android:text="@string/cancel"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_ok"
         app:layout_constraintStart_toStartOf="@+id/et_newText"
         app:layout_constraintTop_toBottomOf="@+id/et_newText"
+        app:layout_constraintHorizontal_chainStyle="spread"
         android:layout_marginTop="20dp"/>
 
     <Button
@@ -27,16 +27,19 @@
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="@+id/btn_cancel"
         app:layout_constraintEnd_toEndOf="@+id/et_newText"
-        app:layout_constraintStart_toEndOf="@+id/btn_cancel"
         app:layout_constraintTop_toTopOf="@+id/btn_cancel" />
 
     <EditText
         android:id="@+id/et_newText"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/button_style"
-        android:textSize="25sp"
+        android:background="@drawable/textview_style"
+        android:gravity="center_horizontal|center_vertical"
+        android:textColor="#ffffff"
+        android:theme="@style/EditTheme"
+        android:textSize="20sp"
+        android:inputType="textNoSuggestions"
         app:layout_constraintBottom_toTopOf="@+id/btn_cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,6 +52,8 @@
         android:layout_height="wrap_content"
         android:textSize="25sp"
         tools:text="this is sample"
+        android:textColor="#ffffff"
+        android:gravity="center_horizontal"
         app:layout_constraintBottom_toTopOf="@+id/et_newText"
         app:layout_constraintEnd_toEndOf="@+id/et_newText"
         app:layout_constraintStart_toStartOf="@+id/et_newText"

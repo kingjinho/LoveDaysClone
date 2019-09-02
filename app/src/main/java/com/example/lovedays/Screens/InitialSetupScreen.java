@@ -36,10 +36,9 @@ public class InitialSetupScreen extends AbsFragment {
     private TextView mTvRelationshipDate;
     private EditText mEtMyName;
     private EditText mEtHisHerName;
-    private ConstraintLayout mLayoutFragment;
     private View mViewInflated;
     private Date today = new Date();
-    private String mRelationshipSince = "";
+    private String mRelationshipSince;
 
     @Override
     public void onAttach(Context context) {
@@ -95,9 +94,7 @@ public class InitialSetupScreen extends AbsFragment {
             }
         });
 
-        mBtnClear.setOnClickListener(v -> {
-            clear();
-        });
+        mBtnClear.setOnClickListener(v -> clear());
 
         return mViewInflated;
     }

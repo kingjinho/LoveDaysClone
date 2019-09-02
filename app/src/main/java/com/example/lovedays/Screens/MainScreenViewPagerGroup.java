@@ -118,6 +118,5 @@ public class MainScreenViewPagerGroup extends AbsFragment {
     private void setupTabViews() {
         mTabLayout.getTabAt(0).setIcon(R.mipmap.ic_setting);
         mTabLayout.getTabAt(1).setText(root.getString(R.string.app_name));
-        mTabLayout.getTabAt(2).setIcon(R.mipmap.ic_anni);
     }
 }

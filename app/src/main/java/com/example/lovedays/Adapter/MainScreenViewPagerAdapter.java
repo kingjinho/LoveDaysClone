@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.lovedays.Screens.MainScreenAnniversaryList;
 import com.example.lovedays.Screens.MainScreenCenterTab;
-import com.example.lovedays.Screens.MainScreenSettings;
 
 /**
  * Created by KING JINHO on 2019-07-29
@@ -14,7 +13,7 @@ import com.example.lovedays.Screens.MainScreenSettings;
 public class MainScreenViewPagerAdapter extends FragmentStatePagerAdapter {
 
     public static final String TAG = MainScreenViewPagerAdapter.class.getSimpleName();
-    public static final int COUNT = 3;
+    public static final int COUNT = 2;
 
     public MainScreenViewPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -27,8 +26,6 @@ public class MainScreenViewPagerAdapter extends FragmentStatePagerAdapter {
                 return new MainScreenAnniversaryList();
             case 1:
                 return new MainScreenCenterTab();
-            case 2:
-                return new MainScreenSettings();
             default:
                 return null;
         }

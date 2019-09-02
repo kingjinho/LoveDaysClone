@@ -1,12 +1,19 @@
 package com.example.lovedays.Screens;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.method.KeyListener;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,10 +50,13 @@ public class CenterTabInnerFragment extends AbsFragment {
         View view = inflater.inflate(R.layout.centertab_inner_text_change, container, false);
         TextView title = view.findViewById(R.id.tv_title);
         EditText et_target = view.findViewById(R.id.et_newText);
+        Button btnCancel = view.findViewById(R.id.btn_cancel);
+        Button btnOk = view.findViewById(R.id.btn_ok);
+        et_target.setPaintFlags(View.INVISIBLE);
         title.setText(type.getTitle());
         switch (type.getType()) {
             case "ME":
-                et_target.setText(Const.MY_NAME);
+                et_target.setText(Const.myName);
                 break;
             case "YOU":
                 et_target.setText(Const.yourName);
@@ -55,7 +65,34 @@ public class CenterTabInnerFragment extends AbsFragment {
                 et_target.setText(root.getString(R.string.in_love_since, Const.relationshipSince));
                 break;
         }
+        et_target.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                InputMethodManager imm = (InputMethodManager) root.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(et_target.getWindowToken(), 0);
+                return false;
+            }
+        });
 
+        btnCancel.setOnClickListener(v -> root.onBackPressed());
+        btnOk.setOnClickListener(v -> {
+            SharedPreferences preferences = root.getSharedPreferences(Const.USER, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            switch (type.getType()) {
+                case "ME":
+                    editor.putString(Const.MY_NAME, et_target.getText().toString());
+                    break;
+                case "YOU":
+                    editor.putString(Const.HIS_HER_NAME, et_target.getText().toString());
+                    break;
+                default:
+                    break;
+            }
+            editor.commit();
+            root.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_container, new MainScreenViewPagerGroup(), MainScreenViewPagerGroup.TAG)
+                    .commit();
+        });
         return view;
     }
 

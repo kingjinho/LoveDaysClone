@@ -7,6 +7,7 @@
     android:background="@drawable/anniversary_background"
     app:layout_constraintStart_toStartOf="@+id/tv_anniversary"
     android:layout_marginEnd="20dp"
+    android:layout_marginStart="20dp"
     android:layout_marginBottom="10dp">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -62,10 +63,10 @@
         android:id="@+id/tv_dDay"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_anniversary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_upcoming"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_date"
         tools:text="D+1000"
         android:textColor="#f1f0f0"
         android:gravity="end"/>

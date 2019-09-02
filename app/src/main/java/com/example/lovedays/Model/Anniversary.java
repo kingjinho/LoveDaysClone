@@ -8,7 +8,7 @@ public class Anniversary {
     private boolean isPassed;
     private boolean isUpcoming;
     private String dateAnniversary;     //기념일 날짜
-    private String nameAnniversary;         //기념일
+    private String nameAnniversary;         //기념일 명칭
     private String dateFromToday = "D"; //오늘 날짜 - 각 기념일
     private int dateFrom;
 
@@ -17,7 +17,7 @@ public class Anniversary {
         this.isUpcoming = isUpcoming;
         this.nameAnniversary = nameAnniversary;
         this.dateAnniversary = dateAnniversary;
-        dateFromToday += (this.isPassed ? "+" + dateFrom : "-" + dateFrom);
+        dateFromToday += (this.isPassed ? "+" + Math.abs(dateFrom) : "-" + dateFrom);
     }
 
     public boolean isPassed() {
